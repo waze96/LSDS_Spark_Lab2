@@ -66,30 +66,22 @@ public class SimplifiedTweet {
 	 * @return an {@link Optional} of a {@link SimplifiedTweet}
 	 */
 	public static Optional<SimplifiedTweet> fromJson(String jsonStr)  {
-		if(!jsonStr.isEmpty()) {
+		try {
 			JsonElement je = jsonParser.parse(jsonStr);
-			JsonObject tweet = je.getAsJsonObject();
-
-			long tweetId, userId, timestampMs;			  
-			String text, userName, language;	 
-
-			if (tweet.has("id") && tweet.has("text") && tweet.has("lang") && tweet.has("timestamp_ms")) {  
-				tweetId = tweet.get("id").getAsLong();
-				timestampMs = tweet.get("timestamp_ms").getAsLong();
-				text = tweet.get("text").getAsString();
-				language = tweet.get("lang").getAsString();
-				if (tweet.has("user")) {   
-					JsonObject user = tweet.getAsJsonObject("user");
-					if (user.has("id") && user.has("name")) {  
-						userId = user.get("id").getAsLong(); 
-						userName = user.get("name").getAsString();
-						SimplifiedTweet t = new SimplifiedTweet(tweetId, text, userId, userName, language, timestampMs);
-						return Optional.of(t);
-					}
-				}
-			}
-		}
-		return Optional.empty();	
+			JsonObject json = je.getAsJsonObject();
+			
+			long tweetId = json.get("id").getAsLong();
+			String text = json.get("text").getAsString();
+			long userId = json.get("user").getAsJsonObject().get("id").getAsLong(); 
+			String userName = json.get("user").getAsJsonObject().get("name").getAsString();
+			String language = json.get("lang").getAsString();
+			long timestampMs = json.get("timestamp_ms").getAsLong();
+			return Optional.of(new SimplifiedTweet(tweetId, text, userId, userName, language, timestampMs));
+		} catch(Exception ex) {
+			System.err.println("Error message: " + ex.getMessage());
+			System.err.println("Unable to parse: " + jsonStr);
+			return Optional.empty();
+		}	
 	}
 	
 	@Override

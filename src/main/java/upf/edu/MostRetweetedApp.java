@@ -9,7 +9,6 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.SparkConf;
 
 import upf.edu.parser.ExtendedSimplifiedTweet;
-import upf.edu.parser.SimplifiedTweet;
 
 import java.util.*;
 

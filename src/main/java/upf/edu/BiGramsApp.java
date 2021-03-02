@@ -41,7 +41,6 @@ public class BiGramsApp {
             .mapToPair(bigram -> new Tuple2<>(bigram, 1))
             .reduceByKey((a, b) -> a + b); //JavaPairRDD<String, Integer>
         
-        //System.out.println("Number of Tweets: " + filteredTweets.count());
         filteredTweets.saveAsTextFile(outputDir);
         sparkContext.close();
     }

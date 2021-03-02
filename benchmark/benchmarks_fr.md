@@ -1,7 +1,7 @@
 ## BENCHMARK FRENCH Spark-based TwitterFilter
 
 	[*] Run time from inside 'controller' LOG file.
-	[*] FR:	INFO total process run time: 232 seconds
+	[*] FR:	INFO total process run time: 220 seconds
 
 
 I execute three times to see the diferences between remove the Hastags or not, because I think that is a significant symbol in twitter, so the results differ a little bit. The last experiment was removing StopWords

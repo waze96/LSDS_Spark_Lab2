@@ -1,15 +1,23 @@
 # BENCHMARKS 
-
 ## GitHub Repo: https://github.com/waze96/LSDS_Spark_Lab2
+
+##### NOTES:
+The version of GSON was downgraded to solve the problem!
+In the MostRetweetedApp, you can comment the 3 first blocks, but I had to run it to obtain the static arrays declared on top!
+
 
 ## Spark-based TwitterFilter
 [!!] Run time from 'controller' LOG file.
 
-	[!!] ES:	INFO total process run time: 230 seconds
-	[!!] EN:	INFO total process run time: 230 seconds
-	[!!] FR:	INFO total process run time: 232 seconds
+	[!!] ES:	INFO total process run time: 234 seconds
+	[!!] EN:	INFO total process run time: 236 seconds
+	[!!] FR:	INFO total process run time: 220 seconds
 
 ## Most popular bi-grams
+I execute three times to see the diferences between remove the Hastags or not, because I think that is a significant symbol in twitter, so the results differ a little bit. The last experiment was removing StopWords
+
+### Commands to manipulate the output (Linux):
+
 I execute this command to get recursively all the output files in local (Change the path):
 
 	aws s3 cp --recursive s3://bucketName/output/run4_en_BIGRAMS/ /tmp/en_BIGRAMS
@@ -19,9 +27,6 @@ This commands changes the order of the line, remove chars, sorts by frequency an
 
 	cat part-* | awk 'BEGIN {FS=","; OFS=" "}{print $NF,$1}' | tr -d '()' | sort -n -r | head
 
-
-[!!] I execute two times to see the diferences between remove the # or not
-	 Because I think that # is a significant symbol in twitter, so the results differ a little bit.
 
 #### TOP 10 BiGrams Spanish without HASHTAGS
 
@@ -61,6 +66,7 @@ This commands changes the order of the line, remove chars, sorts by frequency an
 	880 repblica checa
 	860 #eurovision #allaboard
 	831 amaiaot2017 alfredot2017
+
 
 
 
@@ -105,6 +111,7 @@ This commands changes the order of the line, remove chars, sorts by frequency an
 
 
 
+
 #### TOP 10 BiGrams French without HASHTAGS
 
 	1619 la france
@@ -145,31 +152,35 @@ This commands changes the order of the line, remove chars, sorts by frequency an
 	235 eurovision 2018
 	233 leurovision cest
 	
+
 	
 ## Most retweeted APP
-[!]	To obtain the copy-paste value to fill the array 'top20RtUsers' on the APP retweeted users 'out/topRtUsers': 
+
+Commands to manipulate the output (Linux):
+
+To obtain the copy-paste value to fill the array 'top20RtUsers' on the APP retweeted users 'out/topRtUsers': 
 	
-	[!] 	cat part-* | awk 'BEGIN {FS=","; OFS=" "}{print $NF,$1}' | tr -d '()' | sort -n -r | head -20 | awk '{print $2}' | sed 's/$/L, /' | tr -d '\n'
+	cat part-* | awk 'BEGIN {FS=","; OFS=" "}{print $NF,$1}' | tr -d '()' | sort -n -r | head -20 | awk '{print $2}' | sed 's/$/L, /' | tr -d '\n'
 
-[!] To obtain the copy-paste value to fill the array 'tweetsOfTop20Users' on the APP retweeted users 'out/tweetsOfTop20Users': 
+To obtain the copy-paste value to fill the array 'tweetsOfTop20Users' on the APP retweeted users 'out/tweetsOfTop20Users': 
 	
-	[!]	cat part-* | awk 'BEGIN {FS=","; OFS=" "}{print $NF,$1}' | tr -d '()' | sort -n -r | head -200 | awk '{print $2}' | sed 's/$/L, /' | tr -d '\n'
+	cat part-* | awk 'BEGIN {FS=","; OFS=" "}{print $NF,$1}' | tr -d '()' | sort -n -r | head -200 | awk '{print $2}' | sed 's/$/L, /' | tr -d '\n'
 
-[!]	In the output folder: outputDir/originalTweetsID
+In the output folder: outputDir/originalTweetsID
 
-	[+] To obtain the list of Original Tweets of Most RT users: 
-		[*] cat * | sed 's/$/L, /' | tr -d '\n'
+	To obtain the list of Original Tweets of Most RT users: 
+		cat * | sed 's/$/L, /' | tr -d '\n'
 
-[!]	In the output folder: outputDir/originalTweets_top20Users
+In the output folder: outputDir/originalTweets_top20Users
 
-	[+] To obtain the list of #RT, Original Tweet ID, UserID of Top20 RT users: 
-		[*] cat * | sort -n | uniq -c | sort -n -r
+	To obtain the list of #RT, Original Tweet ID, UserID of Top20 RT users: 
+		cat * | sort -n | uniq -c | sort -n -r
 
-	[+] To obtain the list of #RT, Original Tweet ID, UserID of Top20 RT users (Ordered by UserID, to identify tweets of the same user): 
-		[*] cat * | sort -n | uniq -c | sort -n -k3
+	To obtain the list of #RT, Original Tweet ID, UserID of Top20 RT users (Ordered by UserID, to identify tweets of the same user): 
+		cat * | sort -n | uniq -c | sort -n -k3
 
 
-# TOP RT TWEETS
+## TOP RT TWEETS
 
 	1# Retweeted User
 	User ID:			3143260474

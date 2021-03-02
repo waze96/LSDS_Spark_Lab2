@@ -102,59 +102,53 @@ public class ExtendedSimplifiedTweet {
 	 * @return an {@link Optional} of a {@link ExtendedSimplifiedTweet}
 	 */
 	public static Optional<ExtendedSimplifiedTweet> fromJson(String jsonStr)  {
-		if(!jsonStr.isEmpty()) {
+		try {
 			JsonElement je = jsonParser.parse(jsonStr);
-			JsonObject tweet = je.getAsJsonObject();
-
-			long tweetId, userId, timestampMs;			
-			boolean isRetweeted;
-			long followersCount, retweetedUserId, retweetedTweetId = 0;
-			String text, userName, language, rtUserName;	
-			ExtendedSimplifiedTweet t;
-
-			if (tweet.has("id") && tweet.has("text") && tweet.has("lang") && tweet.has("timestamp_ms")) {  
-				tweetId = tweet.get("id").getAsLong();
-				timestampMs = tweet.get("timestamp_ms").getAsLong();
-				text = tweet.get("text").getAsString();
-				language = tweet.get("lang").getAsString();
-				if (tweet.has("user")) {   
-					JsonObject user = tweet.getAsJsonObject("user");
-					if (user.has("id") && user.has("name")) {  
-						userId = user.get("id").getAsLong(); 
-						userName = user.get("name").getAsString();
-						followersCount = user.get("followers_count").getAsLong(); 
-						
-						if (tweet.has("retweeted_status")){
-							isRetweeted = true;
-							JsonObject rt_stat = tweet.getAsJsonObject("retweeted_status");
-							if (rt_stat.has("id")) {  
-								retweetedTweetId = rt_stat.get("id").getAsLong(); 
-							}
-							if (rt_stat.has("user")) {   
-								JsonObject rt_user = rt_stat.getAsJsonObject("user");
-								if (rt_user.has("id") && rt_user.has("name")) { 
-									rtUserName = rt_user.get("name").getAsString();
-									retweetedUserId = rt_user.get("id").getAsLong(); 
-									t = new ExtendedSimplifiedTweet(tweetId, text, userId, userName, followersCount, language, isRetweeted, retweetedUserId, rtUserName, retweetedTweetId, timestampMs);
-									return Optional.of(t);
-								}
-							}
-						}
-						else {
-							isRetweeted = false;
-							retweetedTweetId = 0;
-							retweetedUserId = 0;
-							rtUserName = "";
-							retweetedTweetId = 0; 
-							t = new ExtendedSimplifiedTweet(tweetId, text, userId, userName, followersCount, language, isRetweeted, retweetedUserId, rtUserName, retweetedTweetId, timestampMs);
-							return Optional.of(t);
-							
-						}
-					}
-				}
+			JsonObject json = je.getAsJsonObject();
+			
+			long tweetId = json.get("id").getAsLong();
+			String text = json.get("text").getAsString();
+			long userId = json.get("user").getAsJsonObject().get("id").getAsLong(); 
+			String userName = json.get("user").getAsJsonObject().get("name").getAsString();
+			long followersCount = json.get("user").getAsJsonObject().get("followers_count").getAsLong(); 
+			boolean isRetweeted = json.has("retweeted_status");
+			
+			long retweetedTweetId, retweetedUserId;
+			String rtUserName;
+			if(isRetweeted) {
+				retweetedTweetId = Optional
+						.ofNullable(json.get("retweeted_status"))
+						.map(JsonElement::getAsJsonObject)
+						.map(jo -> jo.get("id"))
+						.map(JsonElement::getAsLong)
+						.orElse(null);
+				
+				Optional<JsonObject> optionalUser = Optional
+						.ofNullable(json.get("retweeted_status"))
+						.map(JsonElement::getAsJsonObject)
+						.map(jo -> jo.get("user"))
+						.map(JsonElement::getAsJsonObject);
+				retweetedUserId = optionalUser
+						.map(jo -> jo.get("id"))
+						.map(JsonElement::getAsLong)
+						.orElse(null);
+				rtUserName = optionalUser
+						.map(jo -> jo.get("name"))
+						.map(JsonElement::getAsString)
+						.orElse(null); 
+			} else {
+				retweetedTweetId  = -1;
+				retweetedUserId = -1; 
+				rtUserName = "";
 			}
+			String language = json.get("lang").getAsString();
+			long timestampMs = json.get("timestamp_ms").getAsLong();
+			return Optional.of(new ExtendedSimplifiedTweet(tweetId, text, userId, userName, followersCount, language, isRetweeted, retweetedUserId, rtUserName, retweetedTweetId, timestampMs));
+		} catch(Exception ex) {
+			System.err.println("Error message: " + ex.getMessage());
+			System.err.println("Unable to parse: " + jsonStr);
+			return Optional.empty();
 		}
-		return Optional.empty();	
 	}
 	
 	@Override

@@ -1,7 +1,7 @@
 ## BENCHMARK ENGLISH Spark-based TwitterFilter
 
 	[*] Run time from inside 'controller' LOG file.
-	[*] EN:	INFO total process run time: 230 seconds
+	[*] EN:	INFO total process run time: 236 seconds
 
 
 
