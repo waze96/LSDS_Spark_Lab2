@@ -1,5 +1,7 @@
 # BENCHMARKS 
 
+## GitHub Repo: https://github.com/waze96/LSDS_Spark_Lab2
+
 ## Spark-based TwitterFilter
 [!!] Run time from 'controller' LOG file.
 
