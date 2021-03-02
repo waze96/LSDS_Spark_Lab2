@@ -2,6 +2,7 @@
 
 ## Spark-based TwitterFilter
 [!!] Run time from 'controller' LOG file.
+
 	[!!] ES:	INFO total process run time: 230 seconds
 	[!!] EN:	INFO total process run time: 230 seconds
 	[!!] FR:	INFO total process run time: 232 seconds
@@ -141,3 +142,91 @@ This commands changes the order of the line, remove chars, sorts by frequency an
 	241 pour france
 	235 eurovision 2018
 	233 leurovision cest
+	
+	
+## Most retweeted APP
+[!]	To obtain the copy-paste value to fill the array 'top20RtUsers' on the APP retweeted users 'out/topRtUsers': 
+	
+	[!] 	cat part-* | awk 'BEGIN {FS=","; OFS=" "}{print $NF,$1}' | tr -d '()' | sort -n -r | head -20 | awk '{print $2}' | sed 's/$/L, /' | tr -d '\n'
+
+[!] To obtain the copy-paste value to fill the array 'tweetsOfTop20Users' on the APP retweeted users 'out/tweetsOfTop20Users': 
+	
+	[!]	cat part-* | awk 'BEGIN {FS=","; OFS=" "}{print $NF,$1}' | tr -d '()' | sort -n -r | head -200 | awk '{print $2}' | sed 's/$/L, /' | tr -d '\n'
+
+[!]	In the output folder: outputDir/originalTweetsID
+
+	[+] To obtain the list of Original Tweets of Most RT users: 
+		[*] cat * | sed 's/$/L, /' | tr -d '\n'
+
+[!]	In the output folder: outputDir/originalTweets_top20Users
+
+	[+] To obtain the list of #RT, Original Tweet ID, UserID of Top20 RT users: 
+		[*] cat * | sort -n | uniq -c | sort -n -r
+
+	[+] To obtain the list of #RT, Original Tweet ID, UserID of Top20 RT users (Ordered by UserID, to identify tweets of the same user): 
+		[*] cat * | sort -n | uniq -c | sort -n -k3
+
+
+# TOP RT TWEETS
+
+	1# Retweeted User
+	User ID:			3143260474
+	Tweet ID:			995356756770467840
+	Tweet:				Ella está al mando. Con @PaquitaSalas nada malo puede pasar, ¿no? #Eurovision https://t.co/5HeUDCqxX6
+	#RT: 				10809
+
+	2# Retweeted User
+	User ID:			24679473
+	Tweet ID:			995372911920893953
+	Tweet:				Twenty minutes to gooo… #allaboard #eurovision https://t.co/brQoCRmrXI
+	#RT: 				393
+
+	3# Retweeted User
+	User ID:			15584187
+	Tweet ID:			995378197477736448
+	Tweet:				IT'S HERE! IT'S FINALLY HERE!🤩🤩#ESC2018 #AllAboard https://t.co/H4QjOio4a6
+	#RT: 				397
+
+	4# Retweeted User
+	User ID:			39538010
+	Tweet ID:			995383476181401601
+	Tweet:				Already hate it 0/10 #Eurovision #esp
+	#RT: 				933
+
+	5# Retweeted User
+	User ID:			38381308
+	Tweet ID:			995420352657461248
+	Tweet:				El dato: han desalojado a tres heterosexuales que se habían colado entre el público. #Eurovision #Eurocancion #YolaidayPacho12points
+	#RT: 				528
+
+	6# Retweeted User
+	User ID:			739812492310896640
+	Tweet ID:			995408052886147079
+	Tweet:				Irlanda: Un puente, dos chiquitos que se quieren. #Eurovision https://t.co/B7ERrWdJdc
+	#RT: 				141
+
+	7# Retweeted User
+	User ID:			1501434991
+	Tweet ID:			995372692902699009
+	Tweet:				Venga va, para no perder la tradición hoy habrá que tuitear un poquillo sobre Eurovision si o que mis panas.
+	#RT: 				581
+
+	8# Retweeted User
+	User ID:			2754746065
+	Tweet ID:			995371907301208064
+	Tweet:				Pueden estar totalmente tranquilos Amaia y Alfred porque diría que España es el único país de todo Eurovision que c… https://t.co/75G6QPejYj
+	#RT: 				518
+
+	9# Retweeted User
+	User ID:			3260160764
+	Tweet ID:			995388112833531905
+	Tweet:				Cuando te baja la regla y se te ha olvidado el támpax #Eurovision https://t.co/1agMCdjbCo
+	#RT: 				144
+
+	10# Retweeted User
+	User ID:			93618138
+	Tweet ID:			995333676614475776
+	Tweet:				¡Ha ocurrido! @Amaia_ot2017 y @Alfred_ot2017 han conocido a @SalSobralMusic 👏👏👏 Han charlado un ratito con él en su… https://t.co/F4vrhj2qmU
+	#RT: 				843
+
+
