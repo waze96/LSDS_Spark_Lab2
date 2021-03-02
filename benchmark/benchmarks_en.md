@@ -6,8 +6,7 @@
 
 
 
-[!!] I execute two times to see the diferences between remove the # or not
-	 Because I think that is a significant symbol in twitter, so the results differ a little bit.
+I execute two times to see the diferences between remove the # or not, Because I think that is a significant symbol in twitter, so the results differ a little bit.
 
 #### TOP 10 BiGrams Engilsh without Hastag
 
