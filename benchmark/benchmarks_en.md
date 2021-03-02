@@ -6,7 +6,7 @@
 
 
 
-I execute two times to see the diferences between remove the # or not, Because I think that is a significant symbol in twitter, so the results differ a little bit.
+I execute three times to see the diferences between remove the Hastags or not, because I think that is a significant symbol in twitter, so the results differ a little bit. The last experiment was removing StopWords
 
 #### TOP 10 BiGrams Engilsh without Hastag
 
